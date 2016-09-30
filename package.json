@@ -2,40 +2,75 @@
   "name": "node-micro-service-example",
   "version": "1.0.0",
   "author": "10Kft",
-  "contributors": [
-    {
-      "name": "Shyam Habarakada",
-      "email": "shyam@10000ft.com"
-    }
-  ],
+  "contributors": [{
+    "name": "Shyam Habarakada",
+    "email": "shyam@10000ft.com"
+  }, {
+    "name": "Skylar Graika",
+    "email": "skylar@10000ft.com"
+  }],
   "config": {
-    "ROOT_DIR": "SuperSuperSecret"
+
   },
   "engines": {
-    "npm": "^3.0.0"
+    "npm": "^3.0.0",
+    "node": "^4.0.0"
   },
   "scripts": {
-    "start": "node_modules/pm2/bin/pm2 start process.yml",
-    "restart": "node_modules/pm2/bin/pm2 startOrReload process.yml",
-    "stop": "node_modules/pm2/bin/pm2 delete all",
-    "test": "node_modules/mocha/bin/mocha --recursive spec/",
-    "nuke": "scripts/cleanup.sh"
+    "lint": "node_modules/.bin/eslint services/**",
+    "migrate": "node_modules/.bin/sequelize db:migrate",
+    "migrate:revert": "node_modules/.bin/sequelize db:migrate:undo",
+    "start": "node_modules/.bin/pm2 startOrGracefulReload process.yml",
+    "restart": "node_modules/.bin/pm2 startOrGracefulReload process.yml",
+    "stop": "node_modules/.bin/pm2 startOrRestart process.yml && node_modules/.bin/pm2 delete process.yml",
+    "logs": "node_modules/.bin/pm2 logs",
+    "beautify": "node_modules/.bin/esformatter -i 'services/**/*.js'",
+    "test": "NODE_ENV=test node ./node_modules/mocha/bin/mocha --recursive spec/"
+      //"codecov": "NODE_ENV=test istanbul cover ./node_modules/.bin/_mocha --recursive spec/* --report lcovonly -- -R spec && codecov -t CODECOV_TOKEN_HERE"
   },
   "dependencies": {
-    "assert": "^1.0.0",
+    "async": "1.5.x",
+    "body-parser": "1.12.x",
+    "compression": "1.6.x",
     "config": "^1.20.1",
-    "cors": "^2.0.0",
-    "debug": "^2.0.0",
-    "express": "^4.0.0",
+    "cors": "^2.7.1",
+    "debug": "2.1.x",
+    "dotenv": "^2.0.0",
+    "express": "4.12.x",
+    "faye": "1.1.2",
+    "getstream": "3.4.0",
     "js-yaml": "^3.6.1",
+    "jsonfile": "^2.2.3",
+    "kue": "^0.11.0",
+    "method-override": "2.3.x",
+    "morgan": "1.5.x",
+    "node-cache": "^3.2.1",
+    "node-uuid": "^1.4.7",
+    "pg": "^4.5.5",
+    "pg-hstore": "^2.3.2",
+    "pluralize": "^2.0.0",
     "pm2": "^1.1.0",
-    "promise": "^7.0.0",
-    "serve-favicon": "^2.0.0",
+    "promise": "7.1.x",
+    "redis": "^2.6.1",
+    "request": "^2.69.0",
+    "response-time": "2.3.x",
+    "sequelize": "^3.23.4",
+    "sequelize-cli": "^2.4.0",
+    "serve-favicon": "2.2.x",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "mocha": "^2.4.0",
-    "should": "^8.0.0",
-    "supertest": "^1.2.0"
+    "assert": "^1.0.0",
+    "chai": "^3.5.0",
+    "codecov": "^1.0.1",
+    "esformatter": "^0.9.3",
+    "esformatter-quotes": "^1.0.3",
+    "eslint": "^2.13.1",
+    "istanbul": "^0.4.3",
+    "mocha": ">=2.4.0",
+    "should": "^8.2.0",
+    "sinon": "^1.17.4",
+    "supertest": "^1.2.0",
+    "unit.js": "^2.0.0"
   }
 }
